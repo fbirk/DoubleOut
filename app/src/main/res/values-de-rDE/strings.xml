@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">DoubleOut</string>
+    <string name="btn_nav_game_text">Neues Spiel</string>
+    <string name="btn_nav_stats_text">Statistiken</string>
+    <string name="btn_nav_achievements">Erfolge</string>
+    <string name="btn_nav_settings_text">Einstellungen</string>
+    <string name="btn_slide_next_text">Weiter</string>
+    <string name="txt_gameStart_heading">Spiel Einstellungen</string>
+    <string name="hello_blank_fragment">Hier ensteht ein neuer Screen</string>
+</resources>

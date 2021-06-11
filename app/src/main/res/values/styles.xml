@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="ViewHeading">
+        <item name="android:textSize">20sp</item>
+        <item name="android:gravity">center</item>
+    </style>
+    <style name="ViewHeading2">
+        <item name="android:textSize">18sp</item>
+        <item name="android:gravity">left</item>
+    </style>
+</resources>

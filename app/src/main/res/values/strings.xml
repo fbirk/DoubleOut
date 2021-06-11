@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">DoubleOut</string>
+    <string name="btn_nav_game_text">Start Game</string>
+    <string name="btn_nav_stats_text">Statistics</string>
+    <string name="btn_nav_achievements">Achievements</string>
+    <string name="btn_nav_settings_text">Settings</string>
+    <string name="btn_slide_next_text">Next</string>
+    <string name="txt_gameStart_heading">New Game Settings</string>
+    <string name="hello_blank_fragment">Hier entsteht ein neuer Screen</string>
+</resources>

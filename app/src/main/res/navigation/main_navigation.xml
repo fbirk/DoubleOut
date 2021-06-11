@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_navigation"
+    app:startDestination="@id/mainFragment">
+
+    <fragment
+        android:id="@+id/mainFragment"
+        android:name="de.fbirk.doubleout.ui.main.MainFragment"
+        android:label="main_fragment"
+        tools:layout="@layout/main_fragment" >
+        <action
+            android:id="@+id/action_mainFragment_to_gameStart"
+            app:destination="@id/gameStart" />
+    </fragment>
+    <fragment
+        android:id="@+id/gameStart"
+        android:name="de.fbirk.doubleout.ui.game.GameStartFragment"
+        android:label="game_start_fragment"
+        tools:layout="@layout/fragment_game_start" >
+        <action
+            android:id="@+id/action_gameStart_to_gameMainView"
+            app:destination="@id/gameMainView" />
+    </fragment>
+    <fragment
+        android:id="@+id/gameMainView"
+        android:name="de.fbirk.doubleout.GameMainView"
+        android:label="fragment_game_main_view"
+        tools:layout="@layout/fragment_game_main_view" >
+        <action
+            android:id="@+id/action_gameMainView_to_gameStart"
+            app:destination="@id/gameStart" />
+        <action
+            android:id="@+id/action_gameMainView_to_mainFragment"
+            app:destination="@id/mainFragment" />
+    </fragment>
+</navigation>
