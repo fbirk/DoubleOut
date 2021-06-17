@@ -8,7 +8,7 @@ import java.util.*
 
 @Entity
 data class Match(
-    @PrimaryKey val number: Int,
+    @PrimaryKey(autoGenerate = true) val number: Int,
     val date: Date,
     val players: List<Player>,
     val sets: List<Set>

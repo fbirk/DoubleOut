@@ -7,7 +7,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import de.fbirk.doubleout.R
 
@@ -18,7 +17,6 @@ class MainFragment : Fragment() {
     }
 
     private lateinit var viewModel: MainViewModel
-    lateinit var navController: NavController
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {

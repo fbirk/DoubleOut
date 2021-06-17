@@ -12,10 +12,10 @@ import de.fbirk.doubleout.ui.game.GameStartAddPlayerFragment
 
 class SelectedPlayerAdapter(
     private val context: GameStartAddPlayerFragment,
-    var playerList: MutableLiveData<List<Player>>
+    var playerList: ArrayList<Player> = arrayListOf(Player(0,0,0,0.0, "TestSpieler"))
 ) : RecyclerView.Adapter<SelectedPlayerAdapter.ItemViewHolder>() {
 
-    var items: MutableLiveData<List<Player>> = playerList
+    var items: ArrayList<Player> = playerList
     set(value) {
         field = value
         notifyDataSetChanged()
@@ -24,8 +24,8 @@ class SelectedPlayerAdapter(
     class ItemViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
         val name: TextView = view.findViewById<TextView>(R.id.txt_selectedPlayer_name)
 
-        fun bind(item: String){
-            name.text = item
+        fun bind(item: Player){
+            name.text = item.name
         }
     }
 
@@ -37,17 +37,13 @@ class SelectedPlayerAdapter(
     }
 
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
-        holder.bind(items.value!![position].name)
+        holder.bind(items[position])
     }
 
     override fun getItemCount(): Int {
         if (items != null) {
-            return items.value!!.size
+            return items.size
         }
         return 0
-    }
-
-    fun update(data:MutableLiveData<List<Player>>){
-
     }
 }
