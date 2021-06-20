@@ -41,6 +41,12 @@ class GameStartAddPlayerFragment : Fragment() {
         autoCompleteTextNewPlayerName.threshold = 1
         autoCompleteTextNewPlayerName.setAdapter(autoCompleteAdapter)
 
+        autoCompleteTextNewPlayerName.setOnTouchListener(
+            View.OnTouchListener { v, event ->
+                autoCompleteTextNewPlayerName.showDropDown()
+                return@OnTouchListener false
+            })
+
         val recyclerView = view.findViewById<RecyclerView>(R.id.recyler_selectedPlayersView)
         selectedPlayerAdapter = SelectedPlayerAdapter(this, _selectedPlayers)
         recyclerView.adapter = selectedPlayerAdapter
