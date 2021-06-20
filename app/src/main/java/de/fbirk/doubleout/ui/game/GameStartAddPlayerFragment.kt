@@ -55,7 +55,10 @@ class GameStartAddPlayerFragment : Fragment() {
         // add current selected/added player to the data storage and list view
         view.findViewById<Button>(R.id.btn_gameStart_addPlayer)
             .setOnClickListener {
-                addPlayerEvent(autoCompleteTextNewPlayerName)
+                // add to list
+                addPlayerEvent(autoCompleteTextNewPlayerName.editableText.toString())
+                // clear text field afterwards
+                autoCompleteTextNewPlayerName.text.clear()
             }
 
         return view
@@ -64,8 +67,8 @@ class GameStartAddPlayerFragment : Fragment() {
     /**
      * Add a new player to the data storage
      */
-    private fun addPlayerEvent(autoCompleteTextNewPlayerName: AutoCompleteTextView) {
-        val playerName: String = autoCompleteTextNewPlayerName.editableText.toString()
+    private fun addPlayerEvent(text: String) {
+        val playerName: String = text
         // TODO: Fetch already known players and check for duplicates with new player
         viewModel.addPlayer(Player(0, 0, 0, 0.0, playerName))
     }
