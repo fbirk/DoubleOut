@@ -21,14 +21,14 @@ With this application you can do the following:
 
 ### Overview of the screens
 
-1.1 Game start screen: Add players
-1.2 Game start screen: Game settings
-2.1 Game overview: Add a dart throw
-2.2 Game overview: Select a struck field on the dart board
-2.3 Game overview: Scoreboard
-3.1 Stats: Timeline of all games per player
-3.2 Stats: Avg point development per player over time
-3.3 Stats: Heatmap of most struck fields on the dart board per player
-3.4 Stats: Distribution of scored points per player
-4 Achievments: Overview of collected achievments per player
-5 Settings: Overall app settings
+* 1.1 Game start screen: Add players
+* 1.2 Game start screen: Game settings
+* 2.1 Game overview: Add a dart throw
+* 2.2 Game overview: Select a struck field on the dart board
+* 2.3 Game overview: Scoreboard
+* 3.1 Stats: Timeline of all games per player
+* 3.2 Stats: Avg point development per player over time
+* 3.3 Stats: Heatmap of most struck fields on the dart board per player
+* 3.4 Stats: Distribution of scored points per player
+* 4 Achievments: Overview of collected achievments per player
+* 5 Settings: Overall app settings

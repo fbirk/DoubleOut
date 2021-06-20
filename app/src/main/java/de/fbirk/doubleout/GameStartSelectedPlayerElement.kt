@@ -34,11 +34,15 @@ class GameStartSelectedPlayerElement : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(
+         val view = inflater.inflate(
             R.layout.fragment_game_start_selected_player_element,
             container,
             false
         )
+
+
+
+        return view
     }
 
     companion object {

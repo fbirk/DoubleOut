@@ -26,7 +26,6 @@ class GameStartAddPlayerFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_game_start_add_player, container, false)
-        val addPlayerButton = view.findViewById<Button>(R.id.btn_gameStart_addPlayer)
         val allPlayers: Array<String> =
             viewModel.allPlayers.value!!.map { player -> player.name }.toTypedArray()
 
@@ -47,9 +46,11 @@ class GameStartAddPlayerFragment : Fragment() {
             recyclerView.adapter!!.notifyDataSetChanged()
         })
 
-        addPlayerButton.setOnClickListener {
-            addPlayerEvent(autoCompleteTextNewPlayerName)
-        }
+        view.findViewById<Button>(R.id.btn_gameStart_addPlayer)
+            .setOnClickListener {
+                addPlayerEvent(autoCompleteTextNewPlayerName)
+            }
+
         return view
     }
 

@@ -15,6 +15,7 @@ class SelectedPlayerAdapter(
     var playerList: ArrayList<Player> = arrayListOf(Player(0,0,0,0.0, "TestSpieler"))
 ) : RecyclerView.Adapter<SelectedPlayerAdapter.ItemViewHolder>() {
 
+
     var items: ArrayList<Player> = playerList
     set(value) {
         field = value

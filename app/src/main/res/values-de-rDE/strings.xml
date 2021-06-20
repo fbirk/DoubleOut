@@ -8,4 +8,5 @@
     <string name="btn_slide_next_text">Weiter</string>
     <string name="txt_gameStart_heading">Spiel Einstellungen</string>
     <string name="hello_blank_fragment">Hier ensteht ein neuer Screen</string>
+    <string name="btn_slide_next_text_alt">Spiel starten</string>
 </resources>
