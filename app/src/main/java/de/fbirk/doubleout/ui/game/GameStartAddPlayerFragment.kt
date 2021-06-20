@@ -15,6 +15,11 @@ import de.fbirk.doubleout.R
 import de.fbirk.doubleout.adapter.SelectedPlayerAdapter
 import de.fbirk.doubleout.model.Player.Player
 
+/**
+ * Fragment for the add player screen (1.1)
+ * Manages fetching of all known players for dropdown selection
+ * and adding new players to the list view.
+ */
 class GameStartAddPlayerFragment : Fragment() {
 
     private val viewModel: GameStartViewModel by activityViewModels()
@@ -40,12 +45,14 @@ class GameStartAddPlayerFragment : Fragment() {
         selectedPlayerAdapter = SelectedPlayerAdapter(this, _selectedPlayers)
         recyclerView.adapter = selectedPlayerAdapter
 
+        // observe player list for changes to update list view
         viewModel.selectedPlayers.observe(viewLifecycleOwner, Observer {
             _selectedPlayers.removeAll(_selectedPlayers)
             _selectedPlayers.addAll(it)
             recyclerView.adapter!!.notifyDataSetChanged()
         })
 
+        // add current selected/added player to the data storage and list view
         view.findViewById<Button>(R.id.btn_gameStart_addPlayer)
             .setOnClickListener {
                 addPlayerEvent(autoCompleteTextNewPlayerName)
@@ -54,9 +61,12 @@ class GameStartAddPlayerFragment : Fragment() {
         return view
     }
 
+    /**
+     * Add a new player to the data storage
+     */
     private fun addPlayerEvent(autoCompleteTextNewPlayerName: AutoCompleteTextView) {
         val playerName: String = autoCompleteTextNewPlayerName.editableText.toString()
-        // Fetch already known players
+        // TODO: Fetch already known players and check for duplicates with new player
         viewModel.addPlayer(Player(0, 0, 0, 0.0, playerName))
     }
 }

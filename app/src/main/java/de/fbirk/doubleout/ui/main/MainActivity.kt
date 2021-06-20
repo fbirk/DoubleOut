@@ -1,14 +1,11 @@
-package de.fbirk.doubleout
+package de.fbirk.doubleout.ui.main
 
 import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.AttributeSet
 import android.view.View
-import android.widget.Button
-import androidx.navigation.findNavController
-import androidx.navigation.fragment.findNavController
-import de.fbirk.doubleout.ui.main.MainFragment
+import de.fbirk.doubleout.R
 
 class MainActivity : AppCompatActivity() {
 
