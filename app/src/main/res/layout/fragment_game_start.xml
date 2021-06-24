@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:translationZ="90dp"
-    tools:context=".ui.game.GameStartFragment">
+    tools:context=".ui.game.start.GameStartFragment">
 
     <TextView
         android:id="@+id/txt_gameStart_heading"

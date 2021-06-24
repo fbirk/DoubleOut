@@ -1,4 +1,4 @@
-package de.fbirk.doubleout.ui.game
+package de.fbirk.doubleout.ui.game.main
 
 import androidx.lifecycle.ViewModel
 

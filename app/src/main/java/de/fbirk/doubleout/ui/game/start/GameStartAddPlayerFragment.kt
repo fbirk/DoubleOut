@@ -1,4 +1,4 @@
-package de.fbirk.doubleout.ui.game
+package de.fbirk.doubleout.ui.game.start
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

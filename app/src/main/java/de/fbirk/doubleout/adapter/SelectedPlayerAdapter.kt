@@ -4,11 +4,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.RecyclerView
 import de.fbirk.doubleout.R
 import de.fbirk.doubleout.model.Player.Player
-import de.fbirk.doubleout.ui.game.GameStartAddPlayerFragment
+import de.fbirk.doubleout.ui.game.start.GameStartAddPlayerFragment
 
 class SelectedPlayerAdapter(
     private val context: GameStartAddPlayerFragment,

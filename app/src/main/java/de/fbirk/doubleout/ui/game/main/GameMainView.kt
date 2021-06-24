@@ -1,12 +1,18 @@
-package de.fbirk.doubleout.ui.game
+package de.fbirk.doubleout.ui.game.main
 
-import androidx.lifecycle.ViewModelProvider
+import android.graphics.Canvas
+import android.graphics.Paint
+import android.graphics.Path
+import android.graphics.RectF
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import de.fbirk.doubleout.R
+import java.lang.Math.*
+
 
 class GameMainView : Fragment() {
 
@@ -28,5 +34,4 @@ class GameMainView : Fragment() {
         viewModel = ViewModelProvider(this).get(GameMainViewViewModel::class.java)
         // TODO: Use the ViewModel
     }
-
 }

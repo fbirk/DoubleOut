@@ -16,7 +16,7 @@
     </fragment>
     <fragment
         android:id="@+id/gameStart"
-        android:name="de.fbirk.doubleout.ui.game.GameStartFragment"
+        android:name="de.fbirk.doubleout.ui.game.start.GameStartFragment"
         android:label="game_start_fragment"
         tools:layout="@layout/fragment_game_start" >
         <action
@@ -25,7 +25,7 @@
     </fragment>
     <fragment
         android:id="@+id/gameMainView"
-        android:name="de.fbirk.doubleout.ui.game.GameMainView"
+        android:name="de.fbirk.doubleout.ui.game.main.GameMainView"
         android:label="fragment_game_main_view"
         tools:layout="@layout/fragment_game_main_view" >
         <action
