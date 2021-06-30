@@ -70,7 +70,6 @@ class DartboardQuarterView @JvmOverloads constructor(
                 length.toFloat(),
                 startingAngle,
                 90.0F,
-                normalColor,
                 normalColor
             )
             startingAngle += 90.0
@@ -85,7 +84,6 @@ class DartboardQuarterView @JvmOverloads constructor(
             (length * 0.3).toFloat(),
             0.0,
             360.0F,
-            khakiField,
             khakiField
         )
     }

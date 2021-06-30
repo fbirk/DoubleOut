@@ -80,7 +80,6 @@ class DartboardSegmentView @JvmOverloads constructor(
                     rOut.toFloat(),
                     startingAngle,
                     18.0F,
-                    color,
                     color
                 )
             }

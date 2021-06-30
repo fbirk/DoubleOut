@@ -11,4 +11,7 @@
     <color name="mule_fawn_red">#992210</color>
     <color name="brown_rust">#b15d3b</color>
     <color name="indian_khaki">#baac8c</color>
+    <color name="highlight1">#99ccff</color>
+    <color name="highlight2">#b0cce8</color>
+
 </resources>

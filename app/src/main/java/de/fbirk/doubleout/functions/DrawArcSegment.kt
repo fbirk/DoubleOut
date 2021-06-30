@@ -1,11 +1,10 @@
 package de.fbirk.doubleout.functions
 
-import android.graphics.Canvas
-import android.graphics.Paint
-import android.graphics.Path
-import android.graphics.RectF
+import android.graphics.*
+import android.graphics.Paint.Align
 import kotlin.math.cos
 import kotlin.math.sin
+
 
 public class DrawArcSegment {
     private val CIRCLE_LIMIT = 359.9999f
@@ -20,6 +19,7 @@ public class DrawArcSegment {
      * canvas.drawArc(new RectF(cx - rMid, cy - rMid, cx + rMid, cy + rMid), startAngle, sweepAngle, false, paint);
      * </code></pre>
      * but supports different fill and stroke paints.
+     * <a href="https://stackoverflow.com/a/25228407" />
      *
      * @param canvas
      * @param cx horizontal middle point of the oval
@@ -41,8 +41,8 @@ public class DrawArcSegment {
         startAngle: Double,
         sweepAngle: Float,
         fill: Paint,
-        stroke: Paint
-    ) {
+        stroke: Paint? = null
+    ): Path {
         var sweepAngle = sweepAngle
         if (sweepAngle > CIRCLE_LIMIT) {
             sweepAngle = CIRCLE_LIMIT
@@ -72,6 +72,30 @@ public class DrawArcSegment {
         )
         segmentPath.arcTo(innerRect, startAngle.toFloat() + sweepAngle, -sweepAngle)
         canvas.drawPath(segmentPath, fill)
-        canvas.drawPath(segmentPath, stroke)
+        if (stroke != null) {
+            stroke.style = Paint.Style.STROKE
+            canvas.drawPath(segmentPath, stroke)
+        }
+        return segmentPath
     }
+
+    public fun drawText(
+        canvas: Canvas,
+        cx: Float,
+        cy: Float,
+        rInn: Float,
+        rOut: Float,
+        startAngle: Double,
+        sweepAngle: Float,
+        text: String,
+        textPaint: Paint
+    ) {
+        textPaint.textAlign = Align.CENTER
+        val midway = Path()
+        val r: Float = (rInn + rOut) / 2
+        val segment = RectF(cx - r, cy - r, cx + r, cy + r)
+        midway.addArc(segment, startAngle.toFloat(), sweepAngle)
+        canvas.drawTextOnPath(text, midway, 0F, 0F, textPaint)
+    }
+
 }

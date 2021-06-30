@@ -5,5 +5,9 @@
     android:layout_height="match_parent"
     tools:context=".ui.game.main.GameMainView">
 
+    <de.fbirk.doubleout.ui.game.main.DartboardView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
 
 </FrameLayout>
