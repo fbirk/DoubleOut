@@ -1,9 +1,5 @@
 package de.fbirk.doubleout.ui.game.main
 
-import android.graphics.Canvas
-import android.graphics.Paint
-import android.graphics.Path
-import android.graphics.RectF
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,10 +7,9 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import de.fbirk.doubleout.R
-import java.lang.Math.*
 
 
-class GameMainView : Fragment() {
+class GameMainView : Fragment()  {
 
     companion object {
         fun newInstance() = GameMainView()
@@ -34,4 +29,20 @@ class GameMainView : Fragment() {
         viewModel = ViewModelProvider(this).get(GameMainViewViewModel::class.java)
         // TODO: Use the ViewModel
     }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        var dartBoardView = view.findViewById<DartboardView>(R.id.main_dartboard_view)
+        dartBoardView.onDartboardFifthClicked = fun(x) {
+            when (x) {
+                0 -> println("Top Right")
+                1 -> println("Bottom Right")
+                2 -> println("Bottom Left")
+                3 -> println("Top Left")
+                4 -> println("Middle")
+            }
+        }
+    }
+
 }

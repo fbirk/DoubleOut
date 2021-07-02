@@ -16,7 +16,7 @@ class DartboardView @JvmOverloads constructor(
     defStyleAttr: Int = 0
 ) : View(context, attrs, defStyleAttr) {
 
-    private val textArray = arrayListOf<String>(
+    private val textArray = arrayListOf(
         "6",
         "10",
         "15",
@@ -41,6 +41,7 @@ class DartboardView @JvmOverloads constructor(
     )
     private val quarters = arrayListOf<Path>()
     private var visibleQuarter: Path? = null
+    private var touchedFifth: Pair<Path?, Int> = Pair(null, -1)
     private val arcSegmentFunctions = DrawArcSegment()
     private lateinit var extraCanvas: Canvas
     private lateinit var extraBitmap: Bitmap
@@ -53,13 +54,8 @@ class DartboardView @JvmOverloads constructor(
     private val whiteColor = ResourcesCompat.getColor(resources, R.color.white, null)
     private val highlightOne =
         ResourcesCompat.getColor(resources, R.color.design_default_color_background, null)
-    private val highlightTwo =
-        ResourcesCompat.getColor(resources, R.color.design_default_color_background, null)
 
     private val highlight = Paint()
-
-    private lateinit var myCanvas: Canvas
-
 
     init {
         isClickable = true
@@ -77,8 +73,6 @@ class DartboardView @JvmOverloads constructor(
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
         canvas?.drawBitmap(extraBitmap, 0f, 0f, null)
-
-        myCanvas = canvas!!
 
         val blackField = Paint()
         blackField.color = blackColor
@@ -184,12 +178,11 @@ class DartboardView @JvmOverloads constructor(
     }
 
     private fun drawOverlays(canvas: Canvas?, cx: Float, cy: Float, length: Double) {
+        quarters.clear()
         val transparentColor = Paint()
         transparentColor.color = highlightOne
         transparentColor.alpha = 0
 
-        val white = Paint()
-        white.color = whiteColor
         val rInn = length * 0.18
         var startingAngle: Double = -90.0
 
@@ -204,8 +197,7 @@ class DartboardView @JvmOverloads constructor(
                     length.toFloat(),
                     startingAngle,
                     90.0F,
-                    transparentColor,
-                    white
+                    transparentColor
                 )
             )
             startingAngle += 90.0
@@ -221,13 +213,13 @@ class DartboardView @JvmOverloads constructor(
                 rInn.toFloat(),
                 0.0,
                 360.0F,
-                transparentColor,
-                white
+                transparentColor
             )
         )
     }
 
     override fun onTouchEvent(event: MotionEvent?): Boolean {
+        performClick()
         if (!isEnabled) {
             return false
         }
@@ -237,14 +229,15 @@ class DartboardView @JvmOverloads constructor(
 
         when (event?.action) {
             MotionEvent.ACTION_DOWN -> {
-                val quarter = checkForMatchingQuarter(x!!, y!!)
-                if (quarter != null) {
-                    visibleQuarter = quarter
+                touchedFifth = checkForMatchingQuarter(x!!, y!!)
+                if (touchedFifth.first != null) {
+                    visibleQuarter = touchedFifth.first
                     invalidate()
                 }
             }
             MotionEvent.ACTION_UP -> {
                 visibleQuarter = null
+                clickDartboardFifthListener(touchedFifth.second)
                 invalidate()
             }
         }
@@ -252,15 +245,15 @@ class DartboardView @JvmOverloads constructor(
         return true
     }
 
-    private fun checkForMatchingQuarter(x: Float, y: Float): Path? {
-        quarters.forEachIndexed { index, path ->
+    private fun checkForMatchingQuarter(x: Float, y: Float): Pair<Path?, Int> {
+        for (index in quarters.size - 1 downTo 0) {
             val boundingRegion = RectF()
             quarters[index].computeBounds(boundingRegion, true)
             if (boundingRegion.contains(x, y)) {
-                return quarters[index]
+                return Pair(quarters[index], index)
             }
         }
-        return null
+        return Pair(null, -1)
     }
 
     // get outer radius of a arc segment depending on the segments position and the overall width of the dart board
@@ -295,5 +288,12 @@ class DartboardView @JvmOverloads constructor(
         extraBitmap = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888)
         extraCanvas = Canvas(extraBitmap)
         extraCanvas.drawColor(backgroundColor)
+    }
+
+    //var onAction = fun(x:Int): Unit = null!!
+    lateinit var onDartboardFifthClicked: (Int) -> Unit
+
+    private fun clickDartboardFifthListener(index: Int) {
+        onDartboardFifthClicked(index)
     }
 }
