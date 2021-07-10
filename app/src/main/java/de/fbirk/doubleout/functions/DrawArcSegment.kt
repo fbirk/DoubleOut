@@ -2,6 +2,7 @@ package de.fbirk.doubleout.functions
 
 import android.graphics.*
 import android.graphics.Paint.Align
+import de.fbirk.doubleout.model.Field
 import kotlin.math.cos
 import kotlin.math.sin
 

@@ -33,7 +33,7 @@ class GameMainView : Fragment()  {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        var dartBoardView = view.findViewById<DartboardView>(R.id.main_dartboard_view)
+        val dartBoardView = view.findViewById<DartboardView>(R.id.main_dartboard_view)
         dartBoardView.onDartboardFifthClicked = fun(x) {
             when (x) {
                 0 -> println("Top Right")

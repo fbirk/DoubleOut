@@ -39,6 +39,7 @@ class DartboardView @JvmOverloads constructor(
         "13",
         "6"
     )
+
     private val quarters = arrayListOf<Path>()
     private var visibleQuarter: Path? = null
     private var touchedFifth: Pair<Path?, Int> = Pair(null, -1)
