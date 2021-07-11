@@ -7,7 +7,7 @@
     tools:context=".ui.game.main.GameMainView">
 
     <de.fbirk.doubleout.ui.game.main.DartboardSegmentView
-        app:selected_segment="0"
+        app:selected_segment="4"
         android:id="@+id/main_dartboard_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>

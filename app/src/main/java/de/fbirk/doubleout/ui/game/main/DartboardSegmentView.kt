@@ -199,7 +199,7 @@ class DartboardSegmentView @JvmOverloads constructor(
             cx,
             cy,
             0.0F,
-            (length * (12.7 / 451.0)).toFloat(),
+            (length * (50.8 / 451.0)).toFloat(),
             0.0,
             360.0F,
             redField
@@ -212,8 +212,8 @@ class DartboardSegmentView @JvmOverloads constructor(
             canvas,
             cx,
             cy,
-            (length * (12.7 / 451.0)).toFloat(),
-            ((length * (12.7 / 451.0)) + (length * (19.3 / 451.0))).toFloat(),
+            (length * (50.8 / 451.0)).toFloat(),
+            ((length * (50.8 / 451.0)) + (length * (77.2 / 451.0))).toFloat(),
             0.0,
             360.0F,
             greenFieldColor
@@ -283,7 +283,7 @@ class DartboardSegmentView @JvmOverloads constructor(
     }
 
     private fun getCXValue(radius: Double): Float {
-        return if (selectedSegment == 0 || selectedSegment == 4) {
+        return if (selectedSegment == 0 || selectedSegment == 3) {
             ((width / 2) - (width / 4) - getChordLength(radius)).toFloat()
         } else {
             ((width / 2) + (width / 4) + getChordLength(radius)).toFloat()
@@ -292,9 +292,9 @@ class DartboardSegmentView @JvmOverloads constructor(
 
     private fun getCYValue(radius: Double): Float {
         return if (selectedSegment < 2) {
-            ((height / 2) - (height / 4) - getChordLength(radius)).toFloat()
+            ((height / 2) - (height / 4) + getChordLength(radius)).toFloat()
         } else {
-            ((height / 2) + (height / 4) + getChordLength(radius)).toFloat()
+            ((height / 2) + (height / 4) - getChordLength(radius)).toFloat()
         }
     }
 
@@ -307,10 +307,10 @@ class DartboardSegmentView @JvmOverloads constructor(
     private fun getOuterRadius(length: Double, element: Int): Double {
         return when (element) {
             1 -> (length * 0.037) + (length * 0.057) + (length * 0.488)
-            2 -> getOuterRadius(length, 1) + (length * 0.047)
+            2 -> getOuterRadius(length, 1) + (length * 0.100)
             3 -> getOuterRadius(length, 2) + (length * 0.324)
-            4 -> getOuterRadius(length, 3) + (length * 0.047)
-            else -> getOuterRadius(length, 4) + (length * 0.326)
+            4 -> getOuterRadius(length, 3) + (length * 0.100)
+            else -> getOuterRadius(length, 4) + (length * 0.232)
         }
     }
 
@@ -318,9 +318,9 @@ class DartboardSegmentView @JvmOverloads constructor(
         return when (element) {
             1 -> (length * 0.037) + (length * 0.057)
             2 -> getInnerRadius(length, 1) + (length * 0.488)
-            3 -> getInnerRadius(length, 2) + (length * 0.047)
+            3 -> getInnerRadius(length, 2) + (length * 0.100)
             4 -> getInnerRadius(length, 3) + (length * 0.324)
-            else -> getInnerRadius(length, 4) + (length * 0.047)
+            else -> getInnerRadius(length, 4) + (length * 0.100)
         }
     }
 
