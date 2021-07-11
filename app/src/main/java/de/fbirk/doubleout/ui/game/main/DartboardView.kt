@@ -251,10 +251,20 @@ class DartboardView @JvmOverloads constructor(
             val boundingRegion = RectF()
             quarters[index].computeBounds(boundingRegion, true)
             if (boundingRegion.contains(x, y)) {
-                return Pair(quarters[index], index)
+                return Pair(quarters[index], getFifthIndex(index))
             }
         }
         return Pair(null, -1)
+    }
+
+    private fun getFifthIndex(index: Int): Int {
+        return when (index) {
+            0 -> 3
+            1 -> 0
+            2 -> 1
+            3 -> 2
+            else -> 4
+        }
     }
 
     // get outer radius of a arc segment depending on the segments position and the overall width of the dart board

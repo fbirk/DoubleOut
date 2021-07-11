@@ -1,16 +1,80 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.game.main.GameMainView">
 
-    <de.fbirk.doubleout.ui.game.main.DartboardSegmentView
-        app:selected_segment="4"
-        android:id="@+id/main_dartboard_view"
+    <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal">
+
+        <RelativeLayout
+            android:id="@+id/layout_dartboard_header"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="25dp"
+            app:layout_constraintBottom_toTopOf="@id/main_dartboard_view"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:text="Player 1" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:text="0P" />
+
+        </RelativeLayout>
+
+        <FrameLayout
+            android:id="@+id/layout_dartboardViewContainer"
+            android:layout_width="wrap_content"
+            android:layout_height="400dp"
+            app:layout_constraintBottom_toTopOf="@id/btn_missed"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/layout_dartboard_header">
+
+            <de.fbirk.doubleout.ui.game.main.DartboardView
+                android:id="@+id/main_dartboard_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <de.fbirk.doubleout.ui.game.main.DartboardSegmentView
+                android:visibility="invisible"
+                app:selected_segment="0"
+                android:id="@+id/main_dartboard_segmentView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </FrameLayout>
 
 
-</FrameLayout>
+        <Button
+            android:id="@+id/btn_missed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Missed"
+            app:layout_constraintBottom_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/layout_dartboardViewContainer" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</RelativeLayout>

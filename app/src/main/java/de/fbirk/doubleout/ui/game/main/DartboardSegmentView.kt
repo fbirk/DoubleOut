@@ -12,6 +12,7 @@ import androidx.core.content.withStyledAttributes
 import de.fbirk.doubleout.R
 import de.fbirk.doubleout.functions.DrawArcSegment
 import de.fbirk.doubleout.model.Field
+import de.fbirk.doubleout.model.FieldPosition
 import kotlin.math.min
 import kotlin.math.sin
 import kotlin.properties.Delegates
@@ -26,7 +27,6 @@ class DartboardSegmentView @JvmOverloads constructor(
     private lateinit var extraBitmap: Bitmap
 
     private var selectedSegment by Delegates.notNull<Int>()
-    private var highlightedField: Path? = null
     private var segments = arrayListOf<Pair<Path, Field>>()
     private val arcSegmentFunctions = DrawArcSegment()
 
@@ -36,7 +36,6 @@ class DartboardSegmentView @JvmOverloads constructor(
     private val greenFieldPaint = Paint()
     private val redFieldPaint = Paint()
     private val khakiFieldPaint = Paint()
-    private val highlightPaint = Paint()
     private val whitePaint = Paint()
     private val backgroundColor: Int
 
@@ -52,11 +51,15 @@ class DartboardSegmentView @JvmOverloads constructor(
         greenFieldPaint.color = ResourcesCompat.getColor(resources, R.color.everglade_green, null)
         redFieldPaint.color = ResourcesCompat.getColor(resources, R.color.mule_fawn_red, null)
         khakiFieldPaint.color = ResourcesCompat.getColor(resources, R.color.indian_khaki, null)
-        highlightPaint.color = ResourcesCompat.getColor(resources, R.color.highlight1, null)
         whitePaint.color = ResourcesCompat.getColor(resources, R.color.white, null)
-        whitePaint.textSize = 40F;
+        whitePaint.textSize = 40F
         backgroundColor =
             ResourcesCompat.getColor(resources, R.color.design_default_color_background, null)
+    }
+
+    fun setSelectedSegmentIndex(index: Int) {
+        selectedSegment = index
+        selectedSegmentPoints = getCurrentPointsArray()
     }
 
     override fun performClick(): Boolean {
@@ -135,11 +138,6 @@ class DartboardSegmentView @JvmOverloads constructor(
         } else {
             drawMiddleCircle(canvas, redFieldPaint, greenFieldPaint)
         }
-
-        // highlight a click
-        if (highlightedField != null) {
-            canvas!!.drawPath(highlightedField!!, highlightPaint)
-        }
     }
 
     /**
@@ -182,7 +180,10 @@ class DartboardSegmentView @JvmOverloads constructor(
         } else {
             2
         }
-        return Field(value, factor, j)
+
+        val pos =
+            if (j == 1) FieldPosition.LOWER else if (j == 3) FieldPosition.UPPER else FieldPosition.NONE
+        return Field(value, factor, pos)
     }
 
     /**
@@ -273,7 +274,6 @@ class DartboardSegmentView @JvmOverloads constructor(
                 // check if touch rectangle intersects with current field element
                 // if so, the touch coordinate lies within the field
                 if (bounds.left != 0.0F && bounds.top != 0.0F && bounds.right != 0.0F && bounds.bottom != 0.0F) {
-                    highlightedField = path
                     return element.second
                 }
             }

@@ -8,4 +8,9 @@
     <string name="txt_gameStart_heading">New Game Settings</string>
     <string name="hello_blank_fragment">Hier entsteht ein neuer Screen</string>
     <string name="btn_slide_next_text_alt">Start Game</string>
+    <string name="field_single">Single</string>
+    <string name="field_double">Double</string>
+    <string name="field_tripple">Tripple</string>
+    <string name="field_lower">lower</string>
+    <string name="field_upper">upper</string>
 </resources>

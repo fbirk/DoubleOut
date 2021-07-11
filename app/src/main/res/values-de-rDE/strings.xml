@@ -9,4 +9,9 @@
     <string name="txt_gameStart_heading">Spiel Einstellungen</string>
     <string name="hello_blank_fragment">Hier ensteht ein neuer Screen</string>
     <string name="btn_slide_next_text_alt">Spiel starten</string>
+    <string name="field_single">Einfach</string>
+    <string name="field_double">Doppel</string>
+    <string name="field_tripple">Dreifach</string>
+    <string name="field_lower">untere</string>
+    <string name="field_upper">obere</string>
 </resources>
