@@ -9,7 +9,7 @@ import androidx.lifecycle.ViewModelProvider
 import de.fbirk.doubleout.R
 
 
-class GameMainView : Fragment()  {
+class GameMainView : Fragment() {
 
     companion object {
         fun newInstance() = GameMainView()
@@ -33,15 +33,9 @@ class GameMainView : Fragment()  {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val dartBoardView = view.findViewById<DartboardView>(R.id.main_dartboard_view)
-        dartBoardView.onDartboardFifthClicked = fun(x) {
-            when (x) {
-                0 -> println("Top Right")
-                1 -> println("Bottom Right")
-                2 -> println("Bottom Left")
-                3 -> println("Top Left")
-                4 -> println("Middle")
-            }
+        val dartBoardView = view.findViewById<DartboardSegmentView>(R.id.main_dartboard_view)
+        dartBoardView.onDartboardSegmentClicked = fun(x) {
+            print(x)
         }
     }
 
