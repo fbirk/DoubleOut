@@ -1,47 +1,76 @@
 package de.fbirk.doubleout.ui.game.main
 
-import androidx.lifecycle.LiveData
+import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import de.fbirk.doubleout.model.Field
 import de.fbirk.doubleout.model.MatchSet
 import de.fbirk.doubleout.model.Player.Player
+import de.fbirk.doubleout.model.Player.PlayerDatabase
 import de.fbirk.doubleout.model.Player.PlayerRepository
 import de.fbirk.doubleout.model.Turn
-import kotlin.collections.ArrayList
 
-class GameMainViewViewModel(private val repository: PlayerRepository) : ViewModel() {
+class GameMainViewViewModel(private val application: Context) : ViewModel() {
     var sets = MutableLiveData<List<MatchSet>>()
     var turns = MutableLiveData<ArrayList<Turn>>()
     var players = MutableLiveData<ArrayList<Player>>()
-    private var currentIndex: Int = 0
+    var hasWinner = MutableLiveData<Boolean>()
+    var currentIndex: Int = 0
+    var currentThrowsInTurn = ""
     private var throwCounter: Int = 0
+    private val repository: PlayerRepository
+
+    init {
+        val dao = PlayerDatabase.getInstance(application).playerDao()
+        repository = PlayerRepository(dao)
+        hasWinner.value = false
+    }
 
 
-    private fun initializeWithPlayers(playerList: LiveData<List<Player>>) {
-        players.value = playerList.value?.toCollection(ArrayList())
+    /**
+     * initialize the game
+     */
+    fun initializeWithPlayers(playerList: List<Player>) {
+        players.value = playerList.toCollection(ArrayList())
         for (player in players.value!!) {
             player.pointsLeft = 301
             player.currentAvg = 0.0
             player.currentPosition = 0
+            player.currentThrows = 0
         }
 
         // sets.value = listOf(MatchSet(0, 0))
         // match.value = Match(0, Calendar.getInstance().time)
     }
 
-    fun getSelectedPlayersById(selectedPlayerIds: IntArray) {
-        if (selectedPlayerIds.isNotEmpty()) {
-            val players = repository.getAllPlayersWithId(selectedPlayerIds.asList())
-            initializeWithPlayers(players)
-        } else {
-            val players = repository.getAllPlayers()
-            println(players.value)
-            initializeWithPlayers(players)
+    fun resetPlayers() {
+        for (player in players.value!!) {
+            player.pointsLeft = 301
+            player.currentPosition = 0
         }
     }
 
+    /**
+     * TODO: get the selected players for this game by their id
+     */
+    fun getSelectedPlayersById(selectedPlayerIds: IntArray) {
+        if (selectedPlayerIds.isNotEmpty()) {
+            val players = repository.getAllPlayersWithId(selectedPlayerIds.asList())
+            initializeWithPlayers(players.value!!)
+        } else {
+            val players = repository.getAllPlayers()
+            println("GameMainView ViewModel: getSelectedPlayersById")
+            println(players.value)
+            if (players.value != null) {
+                initializeWithPlayers(players.value!!)
+            }
+        }
+    }
+
+    /**
+     * cycle through player list and set next player index
+     */
     private fun nextPlayer() {
         if (currentIndex < players.value?.size!! - 1) {
             currentIndex++
@@ -50,30 +79,77 @@ class GameMainViewViewModel(private val repository: PlayerRepository) : ViewMode
         }
     }
 
+    /**
+     * add points to current player, update informations
+     */
     fun addPoints(field: Field) {
-        if (players.value!![currentIndex].pointsLeft > (field.value * field.factor)) {
-            //sets.value?.get(currentSet)?.turn?.add(Turn(field, players.value!![currentIndex]))
-            players.value!![currentIndex].pointsLeft -= (field.value * field.factor)
+        var currentThrowOverviewSeparator = ""
+        if (throwCounter != 0) {
+            currentThrowOverviewSeparator = " |"
+        } else {
+            currentThrowsInTurn = ""
+        }
+        // generate overview of throws in this turn
+        currentThrowsInTurn = if (field.value != 0) {
+            currentThrowsInTurn.plus("$currentThrowOverviewSeparator $field")
+        } else {
+            currentThrowsInTurn.plus("$currentThrowOverviewSeparator 0")
         }
 
         throwCounter++
 
+        // decrease points left for current player if not overthrown
+        if (players.value!![currentIndex].pointsLeft >= (field.value * field.factor)) {
+            //sets.value?.get(currentSet)?.turn?.add(Turn(field, players.value!![currentIndex]))
+            players.value!![currentIndex].pointsLeft -= (field.value * field.factor)
+        } else {
+            // if overthrown -> skip and get next player
+            throwCounter = 3
+        }
+
+        // update statistics for current player
+        val currentPlayer = players.value!![currentIndex]
+        players.value!![currentIndex].currentThrows++
+        players.value!![currentIndex].currentAvg =
+            calculateRunningMean(currentPlayer, (field.value * field.factor))
+
+
         if (throwCounter % 3 == 0) {
+            throwCounter = 0
             nextPlayer()
         }
 
+        // update leader board
         calculateStandings()
     }
 
+    /**
+     * incremental calculation of avg. points per throw
+     * TODO: avg. points per turn (for 3 throws)
+     */
+    private fun calculateRunningMean(currentPlayer: Player, value: Int): Double {
+        var avg = currentPlayer.currentAvg
+        avg -= avg / currentPlayer.currentThrows
+        avg += value / currentPlayer.currentThrows
+        return avg
+    }
+
+    /**
+     * update leaderboard and check if game is finished
+     */
     private fun calculateStandings() {
+        var isFinished = hasWinner.value!!
         val list = players.value!!
         // sort players in ascending order by their points left to zero
         list.sortBy { item -> item.pointsLeft }
 
         for (index in 1..list.size) {
             list[index - 1].currentPosition = index
+
+            isFinished = list[index - 1].pointsLeft == 0 || isFinished
         }
 
+        hasWinner.value = isFinished
         players.value = list
     }
 
@@ -82,12 +158,12 @@ class GameMainViewViewModel(private val repository: PlayerRepository) : ViewMode
     }
 }
 
-class GameMainViewViewModelFactory(private val repository: PlayerRepository) :
+class GameMainViewViewModelFactory(private val application: Context) :
     ViewModelProvider.Factory {
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(GameMainViewViewModel::class.java)) {
             @Suppress("UNCHECKED_CAST")
-            return GameMainViewViewModel(repository) as T
+            return GameMainViewViewModel(application) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }

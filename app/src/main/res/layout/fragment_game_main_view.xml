@@ -34,7 +34,7 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <TextView
-                android:id="@+id/txt_descriptionCurrentPlayer"
+                android:id="@+id/txt_descriptionCurrentPlayerName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
@@ -44,19 +44,37 @@
                 android:id="@+id/txt_currentPlayerName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="2dp"
-                android:layout_marginLeft="2dp"
-                android:layout_toEndOf="@+id/txt_descriptionCurrentPlayer"
-                android:layout_toRightOf="@+id/txt_descriptionCurrentPlayer"
+                android:layout_marginStart="5dp"
+                android:layout_marginLeft="5dp"
+                android:layout_toEndOf="@+id/txt_descriptionCurrentPlayerName"
+                android:layout_toRightOf="@+id/txt_descriptionCurrentPlayerName"
                 android:text="Player 1" />
 
             <TextView
+                android:id="@+id/txt_descriptionCurrentPlayerPoints"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_toLeftOf="@+id/txt_currentPlayerPoints"
+                android:text="@string/txt_descriptionCurrentPlayerPoints" />
+
+            <TextView
+                android:id="@+id/txt_currentPlayerPoints"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
                 android:layout_alignParentRight="true"
-                android:text="Current: 0P" />
+                android:text="301P" />
 
         </RelativeLayout>
+
+        <TextView
+            android:id="@+id/txt_currentThrowsOverview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="@id/layout_dartboardViewContainer"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/layout_dartboard_header" />
 
         <FrameLayout
             android:id="@+id/layout_dartboardViewContainer"

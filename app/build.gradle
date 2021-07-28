@@ -36,6 +36,9 @@ android {
 }
 
 dependencies {
+    // MP Android Chart
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
+
     implementation 'androidx.gridlayout:gridlayout:1.0.0'
     def room_version = "2.3.0"
     def fontawsome_version = "0.0.5"

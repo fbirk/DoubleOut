@@ -1,13 +1,14 @@
 package de.fbirk.doubleout.ui.game.start
 
 import android.app.Application
+import android.content.Context
 import androidx.lifecycle.*
 import de.fbirk.doubleout.model.Player.Player
 import de.fbirk.doubleout.model.Player.PlayerDatabase
 import de.fbirk.doubleout.model.Player.PlayerRepository
 import kotlinx.coroutines.launch
 
-class GameStartViewModel(application: Application) : ViewModel() {
+class GameStartViewModel(application: Context) : ViewModel() {
     var selectedPlayers = MutableLiveData<ArrayList<Player>>()
     var allPlayers: LiveData<List<Player>>
     private val repository: PlayerRepository
@@ -36,7 +37,7 @@ class GameStartViewModel(application: Application) : ViewModel() {
     }
 }
 
-class GameStartViewModelFactory(private val application: Application) : ViewModelProvider.Factory {
+class GameStartViewModelFactory(private val application: Context) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(GameStartViewModel::class.java)) {
             return GameStartViewModel(application) as T

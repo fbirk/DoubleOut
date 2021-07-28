@@ -27,9 +27,11 @@ class ActivePlayerAdapter(
         val avg: TextView = view.findViewById(R.id.txt_gameOverview_gameAvg)
         val position: TextView = view.findViewById(R.id.txt_gameOverview_position)
 
-        fun bind(item: Player){
+        fun bind(item: Player) {
             name.text = item.name
-            avg.text = item.avgPoints.toString()
+            avg.text = "%.1f".format(item.currentAvg).toDouble().toString()
+            points.text = item.pointsLeft.toString()
+            position.text = item.currentPosition.toString()
         }
     }
 

@@ -1,21 +1,17 @@
 package de.fbirk.doubleout.ui.game.start
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.viewpager2.widget.ViewPager2
 import de.fbirk.doubleout.R
-import de.fbirk.doubleout.adapter.ViewPagerAdapter
-import de.fbirk.doubleout.model.Player.PlayerDatabase
-import de.fbirk.doubleout.model.Player.PlayerRepository
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.SupervisorJob
+import de.fbirk.doubleout.adapter.GameStartViewPagerAdapter
 
 /**
  * Main Fragment for the Game Start screens.
@@ -23,11 +19,12 @@ import kotlinx.coroutines.SupervisorJob
  */
 class GameStartFragment : Fragment() {
 
-    private val viewModel: GameStartViewModel =
-        ViewModelProvider(
-            this
-        ).get(GameStartViewModel::class.java)
+    private lateinit var viewModel: GameStartViewModel
 
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        viewModel = ViewModelProvider(this, GameStartViewModelFactory(context)).get(GameStartViewModel::class.java)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -41,7 +38,7 @@ class GameStartFragment : Fragment() {
 
         // Instantiate the viewPager to manage swipe between "addPlayer" and "gameSettings" screens
         val mViewPager = view.findViewById<ViewPager2>(R.id.pager_gameStart_viewPager)
-        mViewPager.adapter = activity?.let { ViewPagerAdapter(it) }
+        mViewPager.adapter = activity?.let { GameStartViewPagerAdapter(it) }
 
         // add action for viewPager navigate back button
         val mGameStartBackButton = view.findViewById<Button>(R.id.btn_gameStart_back)
@@ -70,7 +67,9 @@ class GameStartFragment : Fragment() {
                 // move to main game screen
                 if (current == mViewPager.adapter?.itemCount) {
                     val selected = viewModel.selectedPlayers
-                    println(selected)
+                    println("GameStartFragment: startNextOnClickListener")
+                    println(selected.value.toString())
+                    println(mSelectedPlayers.toString() + ", " + mSelectedPlayers.size)
                     // pass an array of player-ids instead of the whole player object, to prevent inconsistent data
                     val action =
                         GameStartFragmentDirections.actionGameStartToGameMainView(mSelectedPlayers)

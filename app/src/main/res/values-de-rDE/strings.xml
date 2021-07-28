@@ -15,4 +15,8 @@
     <string name="field_lower">untere</string>
     <string name="field_upper">obere</string>
     <string name="txt_descriptionCurrentPlayerText">"Aktueller Spieler: "</string>
+    <string name="txt_descriptionCurrentPlayerPoints">"Punkte: "</string>
+    <string name="btn_dialog_back">Zum Hauptmenü</string>
+    <string name="btn_dialog_again">Erneut Spielen</string>
+    <string name="txt_dialog_message">Spiel beendet!</string>
 </resources>

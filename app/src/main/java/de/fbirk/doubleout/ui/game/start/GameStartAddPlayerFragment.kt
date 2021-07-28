@@ -1,10 +1,12 @@
 package de.fbirk.doubleout.ui.game.start
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import android.widget.Button
@@ -27,22 +29,12 @@ import kotlinx.coroutines.SupervisorJob
  */
 class GameStartAddPlayerFragment : Fragment() {
 
-    private val applicationScope = CoroutineScope(SupervisorJob())
-    private val database by lazy {
-        context?.let {
-            PlayerDatabase.getInstance(
-                it,
-                applicationScope
-            )
-        }
-    }
-    private val repository by lazy { database?.let { PlayerRepository(it.playerDao()) } }
-    private val viewModel: GameStartViewModel =
-        ViewModelProvider(
-            this,
-            GameStartViewModelFactory(repository!!)
-        ).get(GameStartViewModel::class.java)
+    private lateinit var viewModel: GameStartViewModel
 
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        viewModel = ViewModelProvider(this, GameStartViewModelFactory(context)).get(GameStartViewModel(context)::class.java)
+    }
 
     private var selectedPlayerAdapter: SelectedPlayerAdapter? = null
     private var _selectedPlayers: ArrayList<Player> = ArrayList()
@@ -94,11 +86,18 @@ class GameStartAddPlayerFragment : Fragment() {
                 addPlayerEvent(autoCompleteTextNewPlayerName.editableText.toString())
                 // clear text field afterwards
                 autoCompleteTextNewPlayerName.text.clear()
+
+                // hide keyboard after input
+                view.hideKeyboard()
             }
 
         return view
     }
 
+    fun View.hideKeyboard() {
+        val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(windowToken, 0)
+    }
 
     /**
      * Add a new player to the data storage

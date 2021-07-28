@@ -25,6 +25,7 @@ data class Player(
     @ColumnInfo(name = "Name")
     val name: String = ""
 ) {
+    var currentThrows: Int = 0
     var currentPosition: Int = 0
     var pointsLeft: Int = 0
     var currentAvg: Double = 0.0

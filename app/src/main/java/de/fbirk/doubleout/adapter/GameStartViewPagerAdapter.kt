@@ -6,7 +6,7 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 import de.fbirk.doubleout.ui.game.start.GameStartAddPlayerFragment
 import de.fbirk.doubleout.ui.game.start.GameStartSettings
 
-class ViewPagerAdapter(fa:FragmentActivity) : FragmentStateAdapter(fa) {
+class GameStartViewPagerAdapter(fa:FragmentActivity) : FragmentStateAdapter(fa) {
 
     private var mFragments = arrayOf(GameStartAddPlayerFragment(), GameStartSettings())
 

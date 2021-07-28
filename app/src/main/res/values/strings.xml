@@ -14,4 +14,8 @@
     <string name="field_lower">lower</string>
     <string name="field_upper">upper</string>
     <string name="txt_descriptionCurrentPlayerText">Active Player:</string>
+    <string name="txt_descriptionCurrentPlayerPoints">Points:</string>
+    <string name="btn_dialog_back">Return to menu</string>
+    <string name="btn_dialog_again">Play again</string>
+    <string name="txt_dialog_message">Game finished!</string>
 </resources>

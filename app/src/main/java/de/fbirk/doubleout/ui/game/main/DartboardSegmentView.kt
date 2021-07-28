@@ -292,9 +292,9 @@ class DartboardSegmentView @JvmOverloads constructor(
 
     private fun getCYValue(radius: Double): Float {
         return if (selectedSegment < 2) {
-            ((height / 2) - (height / 4) + getChordLength(radius)).toFloat()
+            ((height / 2) - (height / 4) + getChordLength(radius) - 200).toFloat()
         } else {
-            ((height / 2) + (height / 4) - getChordLength(radius)).toFloat()
+            ((height / 2) + (height / 4) - getChordLength(radius) + 200).toFloat()
         }
     }
 

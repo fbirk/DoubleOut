@@ -1,4 +1,4 @@
-package de.fbirk.doubleout.ui.game.start
+package de.fbirk.doubleout.ui.stats
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -9,11 +9,10 @@ import de.fbirk.doubleout.R
 
 /**
  * A simple [Fragment] subclass.
- * Use the [GameStartSelectedPlayerElement.newInstance] factory method to
+ * Use the [GameStatsLineChartFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class GameStartSelectedPlayerElement : Fragment() {
-
+class GameStatsLineChartFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -23,11 +22,6 @@ class GameStartSelectedPlayerElement : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-         val view = inflater.inflate(
-            R.layout.fragment_game_start_selected_player_element,
-            container,
-            false
-        )
-        return view
+        return inflater.inflate(R.layout.fragment_game_stats_linechart, container, false)
     }
 }

@@ -9,21 +9,14 @@ data class Field(
     val pos: FieldPosition = FieldPosition.NONE
 ) {
     override fun toString(): String {
-        return super.toString()
-        //if (pos != FieldPosition.NONE) {
-          //  val posText = if (pos == FieldPosition.LOWER) Resources.getSystem()
-            //    .getString(R.string.field_lower) else Resources.getSystem()
-              //  .getString(R.string.field_upper)
-           //  return factorToString() + " " + posText + " " + value
-        //}
-        // return factorToString() + " " + value
+        return factorToString() + "" + value
     }
 
     private fun factorToString(): String {
         return when (factor) {
-            2 -> Resources.getSystem().getString(R.string.field_double)
-            3 -> Resources.getSystem().getString(R.string.field_tripple)
-            else -> Resources.getSystem().getString(R.string.field_single)
+            2 -> "D"
+            3 -> "T"
+            else -> "S"
         }
     }
 }
