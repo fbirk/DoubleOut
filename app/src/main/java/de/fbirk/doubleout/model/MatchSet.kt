@@ -1,6 +1,6 @@
 package de.fbirk.doubleout.model
 
-data class Set(
+data class MatchSet(
     val number: Int,
-    val turn: Array<Turn>
+    val matchReference: Int
 )

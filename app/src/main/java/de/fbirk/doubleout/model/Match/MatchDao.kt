@@ -1,5 +1,6 @@
 package de.fbirk.doubleout.model.Match
 
+import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
@@ -12,8 +13,8 @@ interface MatchDao {
     fun save(match: Match)
 
     @Query("SELECT * FROM 'Match' WHERE number = :matchId")
-    fun loadById(matchId: Int): Flow<Match>
+    fun loadById(matchId: Int): LiveData<Match>
 
-    @Query("SELECT * FROM 'Match' WHERE date = :date")
-    fun loadByDate(date: Date): Flow<List<Match>>
+    //@Query("SELECT * FROM 'Match' WHERE date = :date")
+    //fun loadByDate(date: Date): LiveData<List<Match>>
 }

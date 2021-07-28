@@ -6,16 +6,28 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.viewpager2.widget.ViewPager2
 import de.fbirk.doubleout.R
 import de.fbirk.doubleout.adapter.ViewPagerAdapter
+import de.fbirk.doubleout.model.Player.PlayerDatabase
+import de.fbirk.doubleout.model.Player.PlayerRepository
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.SupervisorJob
 
 /**
  * Main Fragment for the Game Start screens.
  * Manages the viewPager and its button logic, also the navigation to the main game screen
  */
 class GameStartFragment : Fragment() {
+
+    private val viewModel: GameStartViewModel =
+        ViewModelProvider(
+            this
+        ).get(GameStartViewModel::class.java)
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -28,11 +40,11 @@ class GameStartFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         // Instantiate the viewPager to manage swipe between "addPlayer" and "gameSettings" screens
-        var mViewPager = view.findViewById<ViewPager2>(R.id.pager_gameStart_viewPager)
+        val mViewPager = view.findViewById<ViewPager2>(R.id.pager_gameStart_viewPager)
         mViewPager.adapter = activity?.let { ViewPagerAdapter(it) }
 
         // add action for viewPager navigate back button
-        var mGameStartBackButton = view.findViewById<Button>(R.id.btn_gameStart_back)
+        val mGameStartBackButton = view.findViewById<Button>(R.id.btn_gameStart_back)
         mGameStartBackButton.setOnClickListener {
             val current = mViewPager.currentItem - 1
             // if viewPager is not at first position move one position back
@@ -41,8 +53,14 @@ class GameStartFragment : Fragment() {
             }
         }
 
+        var mSelectedPlayers: IntArray = intArrayOf()
+        viewModel.selectedPlayers.observe(viewLifecycleOwner, { list ->
+            println(list)
+            mSelectedPlayers = list.map { it.number }.toIntArray()
+        })
+
         // add action for viewPager navigate next/start game button
-        var mGameStartNextButton = view.findViewById<Button>(R.id.btn_gameStart_next)
+        val mGameStartNextButton = view.findViewById<Button>(R.id.btn_gameStart_next)
         mGameStartNextButton.setOnClickListener {
             val current = mViewPager.currentItem + 1
             // move to next screen if not at last position
@@ -51,14 +69,19 @@ class GameStartFragment : Fragment() {
             } else {
                 // move to main game screen
                 if (current == mViewPager.adapter?.itemCount) {
-                    findNavController().navigate(R.id.action_gameStart_to_gameMainView)
+                    val selected = viewModel.selectedPlayers
+                    println(selected)
+                    // pass an array of player-ids instead of the whole player object, to prevent inconsistent data
+                    val action =
+                        GameStartFragmentDirections.actionGameStartToGameMainView(mSelectedPlayers)
+                    findNavController().navigate(action)
                 }
             }
         }
 
         // define alternate callback on viewPager page change
         // rename buttons and hide/show buttons according to new viewPager position
-        var callback = object : ViewPager2.OnPageChangeCallback() {
+        val callback = object : ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
                 when (position) {
                     0 -> {

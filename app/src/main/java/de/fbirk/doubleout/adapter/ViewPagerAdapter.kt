@@ -8,11 +8,15 @@ import de.fbirk.doubleout.ui.game.start.GameStartSettings
 
 class ViewPagerAdapter(fa:FragmentActivity) : FragmentStateAdapter(fa) {
 
-    var mFragments = arrayOf(GameStartAddPlayerFragment(), GameStartSettings())
+    private var mFragments = arrayOf(GameStartAddPlayerFragment(), GameStartSettings())
 
     override fun getItemCount(): Int = mFragments.size
 
     override fun createFragment(position: Int): Fragment {
         return mFragments[position]
+    }
+
+    fun getFragments(): Array<Fragment>{
+        return mFragments
     }
 }

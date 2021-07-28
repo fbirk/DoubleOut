@@ -7,12 +7,12 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import de.fbirk.doubleout.R
 import de.fbirk.doubleout.model.Player.Player
-import de.fbirk.doubleout.ui.game.start.GameStartAddPlayerFragment
+import de.fbirk.doubleout.ui.game.main.GameMainView
 
-class SelectedPlayerAdapter(
-    private val context: GameStartAddPlayerFragment,
-    var playerList: ArrayList<Player> = arrayListOf(Player(0, 0, 0, 0, 0.0, "TestSpieler"))
-) : RecyclerView.Adapter<SelectedPlayerAdapter.ItemViewHolder>() {
+class ActivePlayerAdapter(
+    private val context: GameMainView,
+    var playerList: ArrayList<Player> = arrayListOf()
+) : RecyclerView.Adapter<ActivePlayerAdapter.ItemViewHolder>() {
 
 
     var items: ArrayList<Player> = playerList
@@ -22,16 +22,20 @@ class SelectedPlayerAdapter(
         }
 
     class ItemViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
-        val name: TextView = view.findViewById<TextView>(R.id.txt_selectedPlayer_name)
+        val name: TextView = view.findViewById<TextView>(R.id.txt_gameOverview_playerName)
+        val points: TextView = view.findViewById(R.id.txt_gameOverview_currentPoints)
+        val avg: TextView = view.findViewById(R.id.txt_gameOverview_gameAvg)
+        val position: TextView = view.findViewById(R.id.txt_gameOverview_position)
 
-        fun bind(item: Player) {
+        fun bind(item: Player){
             name.text = item.name
+            avg.text = item.avgPoints.toString()
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
         val adapterLayout = LayoutInflater.from(parent.context)
-            .inflate(R.layout.fragment_game_start_selected_player_element, parent, false)
+            .inflate(R.layout.fragment_game_main_player_overview_element, parent, false)
 
         return ItemViewHolder(adapterLayout)
     }
@@ -41,6 +45,9 @@ class SelectedPlayerAdapter(
     }
 
     override fun getItemCount(): Int {
-        return items.size
+        if (items != null) {
+            return items.size
+        }
+        return 0
     }
 }

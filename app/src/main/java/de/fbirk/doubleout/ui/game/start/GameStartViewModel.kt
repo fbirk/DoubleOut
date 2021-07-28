@@ -1,31 +1,46 @@
 package de.fbirk.doubleout.ui.game.start
 
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import de.fbirk.doubleout.model.Match.MatchRepository
+import android.app.Application
+import androidx.lifecycle.*
 import de.fbirk.doubleout.model.Player.Player
+import de.fbirk.doubleout.model.Player.PlayerDatabase
+import de.fbirk.doubleout.model.Player.PlayerRepository
+import kotlinx.coroutines.launch
 
-class GameStartViewModel : ViewModel() {
-    // private val repo: MatchRepository = MatchRepository()
+class GameStartViewModel(application: Application) : ViewModel() {
     var selectedPlayers = MutableLiveData<ArrayList<Player>>()
-    var allPlayers: MutableLiveData<ArrayList<Player>> = MutableLiveData(
-        arrayListOf<Player>(
-            Player(1, 0, 0, 0.0, "Player 1"),
-            Player(2, 0, 0, 0.0, "Player2"),
-            Player(3, 0, 0, 0.0, "Player3")
-        )
-    )
+    var allPlayers: LiveData<List<Player>>
+    private val repository: PlayerRepository
 
-    fun addPlayer(player: Player) {
+    init {
+        val dao = PlayerDatabase.getInstance(application).playerDao()
+        repository = PlayerRepository(dao)
+        allPlayers = repository.getAllPlayers()
+    }
+
+    fun addPlayer(player: Player) = viewModelScope.launch {
         if (selectedPlayers.value != null && selectedPlayers.value?.contains(player) == false) {
-            var currentPlayers = selectedPlayers.value
+            val currentPlayers = selectedPlayers.value
+
             if (currentPlayers != null) {
+                repository.savePlayer(player)
                 currentPlayers.add(player)
-                selectedPlayers.postValue(currentPlayers!!)
+                //selectedPlayers.postValue(currentPlayers!!)
+                selectedPlayers.value = currentPlayers!!
             }
         } else {
-            var playerList = arrayListOf<Player>(player)
-            selectedPlayers.postValue(playerList)
+            val playerList = arrayListOf(player)
+            //selectedPlayers.postValue(playerList)
+            selectedPlayers.value = playerList
         }
+    }
+}
+
+class GameStartViewModelFactory(private val application: Application) : ViewModelProvider.Factory {
+    override fun <T : ViewModel> create(modelClass: Class<T>): T {
+        if (modelClass.isAssignableFrom(GameStartViewModel::class.java)) {
+            return GameStartViewModel(application) as T
+        }
+        throw IllegalArgumentException("Unknown ViewModel class")
     }
 }

@@ -13,4 +13,5 @@
     <string name="field_tripple">Tripple</string>
     <string name="field_lower">lower</string>
     <string name="field_upper">upper</string>
+    <string name="txt_descriptionCurrentPlayerText">Active Player:</string>
 </resources>

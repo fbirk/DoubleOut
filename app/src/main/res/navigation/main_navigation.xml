@@ -34,5 +34,8 @@
         <action
             android:id="@+id/action_gameMainView_to_mainFragment"
             app:destination="@id/mainFragment" />
+        <argument
+            android:name="PlayerIDs"
+            app:argType="integer[]" />
     </fragment>
 </navigation>

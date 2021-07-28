@@ -1,19 +1,24 @@
 package de.fbirk.doubleout.ui.game.start
 
+import android.annotation.SuppressLint
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import android.widget.Button
-import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.Observer
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import de.fbirk.doubleout.R
 import de.fbirk.doubleout.adapter.SelectedPlayerAdapter
 import de.fbirk.doubleout.model.Player.Player
+import de.fbirk.doubleout.model.Player.PlayerDatabase
+import de.fbirk.doubleout.model.Player.PlayerRepository
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.SupervisorJob
 
 /**
  * Fragment for the add player screen (1.1)
@@ -22,17 +27,33 @@ import de.fbirk.doubleout.model.Player.Player
  */
 class GameStartAddPlayerFragment : Fragment() {
 
-    private val viewModel: GameStartViewModel by activityViewModels()
-    private var selectedPlayerAdapter: SelectedPlayerAdapter? = null
-    private var _selectedPlayers: ArrayList<Player> = ArrayList<Player>()
+    private val applicationScope = CoroutineScope(SupervisorJob())
+    private val database by lazy {
+        context?.let {
+            PlayerDatabase.getInstance(
+                it,
+                applicationScope
+            )
+        }
+    }
+    private val repository by lazy { database?.let { PlayerRepository(it.playerDao()) } }
+    private val viewModel: GameStartViewModel =
+        ViewModelProvider(
+            this,
+            GameStartViewModelFactory(repository!!)
+        ).get(GameStartViewModel::class.java)
 
+
+    private var selectedPlayerAdapter: SelectedPlayerAdapter? = null
+    private var _selectedPlayers: ArrayList<Player> = ArrayList()
+
+    @SuppressLint("ClickableViewAccessibility")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_game_start_add_player, container, false)
-        val allPlayers: Array<String> =
-            viewModel.allPlayers.value!!.map { player -> player.name }.toTypedArray()
+        val allPlayers = arrayListOf("")
 
         val autoCompleteTextNewPlayerName =
             view.findViewById<AutoCompleteTextView>(R.id.txt_selectPlayer_newPlayerName)
@@ -40,6 +61,14 @@ class GameStartAddPlayerFragment : Fragment() {
             ArrayAdapter<String>(view.context, android.R.layout.select_dialog_item, allPlayers)
         autoCompleteTextNewPlayerName.threshold = 1
         autoCompleteTextNewPlayerName.setAdapter(autoCompleteAdapter)
+
+        viewModel.allPlayers.observe(viewLifecycleOwner) { players ->
+            players.let {
+                autoCompleteAdapter.clear()
+                val playerList = players.map { player -> player.name }.toMutableList()
+                autoCompleteAdapter.addAll(playerList)
+            }
+        }
 
         autoCompleteTextNewPlayerName.setOnTouchListener(
             View.OnTouchListener { v, event ->
@@ -52,7 +81,7 @@ class GameStartAddPlayerFragment : Fragment() {
         recyclerView.adapter = selectedPlayerAdapter
 
         // observe player list for changes to update list view
-        viewModel.selectedPlayers.observe(viewLifecycleOwner, Observer {
+        viewModel.selectedPlayers.observe(viewLifecycleOwner, {
             _selectedPlayers.removeAll(_selectedPlayers)
             _selectedPlayers.addAll(it)
             recyclerView.adapter!!.notifyDataSetChanged()
@@ -70,12 +99,13 @@ class GameStartAddPlayerFragment : Fragment() {
         return view
     }
 
+
     /**
      * Add a new player to the data storage
      */
     private fun addPlayerEvent(text: String) {
         val playerName: String = text
         // TODO: Fetch already known players and check for duplicates with new player
-        viewModel.addPlayer(Player(0, 0, 0, 0.0, playerName))
+        viewModel.addPlayer(Player(0, 0, 0, 0, 0.0, playerName))
     }
 }

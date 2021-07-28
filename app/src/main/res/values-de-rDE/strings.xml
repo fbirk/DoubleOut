@@ -14,4 +14,5 @@
     <string name="field_tripple">Dreifach</string>
     <string name="field_lower">untere</string>
     <string name="field_upper">obere</string>
+    <string name="txt_descriptionCurrentPlayerText">"Aktueller Spieler: "</string>
 </resources>
