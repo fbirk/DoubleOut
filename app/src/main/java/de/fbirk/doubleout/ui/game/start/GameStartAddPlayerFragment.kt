@@ -11,16 +11,14 @@ import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import android.widget.Button
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import de.fbirk.doubleout.R
 import de.fbirk.doubleout.adapter.SelectedPlayerAdapter
 import de.fbirk.doubleout.model.Player.Player
-import de.fbirk.doubleout.model.Player.PlayerDatabase
-import de.fbirk.doubleout.model.Player.PlayerRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.runBlocking
 
 /**
  * Fragment for the add player screen (1.1)
@@ -29,11 +27,19 @@ import kotlinx.coroutines.SupervisorJob
  */
 class GameStartAddPlayerFragment : Fragment() {
 
+    private val coroutineScope = CoroutineScope(SupervisorJob())
+    lateinit var onSelectedPlayerIdsPopulated: (IntArray) -> Unit
     private lateinit var viewModel: GameStartViewModel
+
+    private fun onPopulateSelectedPlayerIds(ids: IntArray) {
+        onSelectedPlayerIdsPopulated(ids)
+    }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        viewModel = ViewModelProvider(this, GameStartViewModelFactory(context)).get(GameStartViewModel(context)::class.java)
+        viewModel = ViewModelProvider(this, GameStartViewModelFactory(context)).get(
+            GameStartViewModel(context)::class.java
+        )
     }
 
     private var selectedPlayerAdapter: SelectedPlayerAdapter? = null
@@ -79,6 +85,10 @@ class GameStartAddPlayerFragment : Fragment() {
             recyclerView.adapter!!.notifyDataSetChanged()
         })
 
+        viewModel.selectedPlayerIds.observe(viewLifecycleOwner, {
+            this.onPopulateSelectedPlayerIds(it!!)
+        })
+
         // add current selected/added player to the data storage and list view
         view.findViewById<Button>(R.id.btn_gameStart_addPlayer)
             .setOnClickListener {
@@ -97,6 +107,10 @@ class GameStartAddPlayerFragment : Fragment() {
     fun View.hideKeyboard() {
         val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(windowToken, 0)
+    }
+
+    fun getSelectedPlayerIds() = runBlocking {
+        return@runBlocking viewModel.getSelectedPlayerIds(coroutineScope)
     }
 
     /**

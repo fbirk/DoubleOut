@@ -301,7 +301,6 @@ class DartboardView @JvmOverloads constructor(
         extraCanvas.drawColor(backgroundColor)
     }
 
-    //var onAction = fun(x:Int): Unit = null!!
     lateinit var onDartboardFifthClicked: (Int) -> Unit
 
     private fun clickDartboardFifthListener(index: Int) {

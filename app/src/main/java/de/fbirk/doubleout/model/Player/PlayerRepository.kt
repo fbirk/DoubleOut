@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 
 class PlayerRepository(private val playerDao: PlayerDao) {
 
-    fun getPlayerById(id: Int): LiveData<Player> {
+    suspend fun getPlayerById(id: Int): LiveData<Player> {
         return playerDao.loadById(id)
     }
 

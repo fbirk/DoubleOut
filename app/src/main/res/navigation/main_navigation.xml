@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_mainFragment_to_gameStart"
             app:destination="@id/gameStart" />
+        <action
+            android:id="@+id/action_mainFragment_to_gameStatsFragment"
+            app:destination="@id/gameStatsFragment" />
     </fragment>
     <fragment
         android:id="@+id/gameStart"
@@ -35,7 +38,12 @@
             android:id="@+id/action_gameMainView_to_mainFragment"
             app:destination="@id/mainFragment" />
         <argument
-            android:name="PlayerIDs"
-            app:argType="integer[]" />
+            android:name="PlayerNames"
+            app:argType="string[]" />
     </fragment>
+    <fragment
+        android:id="@+id/gameStatsFragment"
+        android:name="de.fbirk.doubleout.ui.stats.GameStatsFragment"
+        android:label="fragment_game_stats_main_view"
+        tools:layout="@layout/fragment_game_stats_main_view" />
 </navigation>

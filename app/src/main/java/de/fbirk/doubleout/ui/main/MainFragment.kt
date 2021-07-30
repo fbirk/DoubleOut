@@ -35,5 +35,11 @@ class MainFragment : Fragment() {
         btnNavGameStart.setOnClickListener {
             this.findNavController().navigate(R.id.action_mainFragment_to_gameStart)
         }
+
+        val btnStatistics = view.findViewById<Button>(R.id.btn_navigate_stats)
+        btnStatistics.setOnClickListener{
+            // TODO: Finish Statistic View
+            //this.findNavController().navigate(R.id.action_mainFragment_to_gameStatsFragment)
+        }
     }
 }

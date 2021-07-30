@@ -6,9 +6,9 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 import de.fbirk.doubleout.ui.game.start.GameStartAddPlayerFragment
 import de.fbirk.doubleout.ui.game.start.GameStartSettings
 
-class GameStartViewPagerAdapter(fa:FragmentActivity) : FragmentStateAdapter(fa) {
+class GameStartViewPagerAdapter(fa:FragmentActivity, fragments:Array<Fragment>) : FragmentStateAdapter(fa) {
 
-    private var mFragments = arrayOf(GameStartAddPlayerFragment(), GameStartSettings())
+    private var mFragments = fragments
 
     override fun getItemCount(): Int = mFragments.size
 

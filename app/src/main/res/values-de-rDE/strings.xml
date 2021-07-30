@@ -19,4 +19,7 @@
     <string name="btn_dialog_back">Zum Hauptmenü</string>
     <string name="btn_dialog_again">Erneut Spielen</string>
     <string name="txt_dialog_message">Spiel beendet!</string>
+    <string name="chart_line_title">Durchschnittliche Punkte über Zeitraum t</string>
+    <string name="txt_gameStats_heading">Spiel-Statistiken</string>
+    <string name="txt_gameStats_subHeading">"Wählen einen Spieler: "</string>
 </resources>

@@ -18,4 +18,7 @@
     <string name="btn_dialog_back">Return to menu</string>
     <string name="btn_dialog_again">Play again</string>
     <string name="txt_dialog_message">Game finished!</string>
+    <string name="chart_line_title">Average points over time</string>
+    <string name="txt_gameStats_heading">Game Statistics</string>
+    <string name="txt_gameStats_subHeading">Select player for statistics:</string>
 </resources>

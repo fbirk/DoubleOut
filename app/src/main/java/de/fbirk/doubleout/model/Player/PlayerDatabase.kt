@@ -32,6 +32,7 @@ abstract class PlayerDatabase : RoomDatabase() {
                         PlayerDatabase::class.java,
                         "Player"
                     )
+                        .allowMainThreadQueries()
                         .build()
                     INSTANCE = instance
                 }

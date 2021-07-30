@@ -19,13 +19,6 @@ import de.fbirk.doubleout.adapter.GameStartViewPagerAdapter
  */
 class GameStartFragment : Fragment() {
 
-    private lateinit var viewModel: GameStartViewModel
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        viewModel = ViewModelProvider(this, GameStartViewModelFactory(context)).get(GameStartViewModel::class.java)
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -36,9 +29,15 @@ class GameStartFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        val fragments = arrayOf(GameStartAddPlayerFragment(), GameStartSettings())
+
         // Instantiate the viewPager to manage swipe between "addPlayer" and "gameSettings" screens
         val mViewPager = view.findViewById<ViewPager2>(R.id.pager_gameStart_viewPager)
-        mViewPager.adapter = activity?.let { GameStartViewPagerAdapter(it) }
+        mViewPager.adapter = activity?.let {
+            GameStartViewPagerAdapter(
+                it, fragments
+            )
+        }
 
         // add action for viewPager navigate back button
         val mGameStartBackButton = view.findViewById<Button>(R.id.btn_gameStart_back)
@@ -50,12 +49,6 @@ class GameStartFragment : Fragment() {
             }
         }
 
-        var mSelectedPlayers: IntArray = intArrayOf()
-        viewModel.selectedPlayers.observe(viewLifecycleOwner, { list ->
-            println(list)
-            mSelectedPlayers = list.map { it.number }.toIntArray()
-        })
-
         // add action for viewPager navigate next/start game button
         val mGameStartNextButton = view.findViewById<Button>(R.id.btn_gameStart_next)
         mGameStartNextButton.setOnClickListener {
@@ -66,14 +59,17 @@ class GameStartFragment : Fragment() {
             } else {
                 // move to main game screen
                 if (current == mViewPager.adapter?.itemCount) {
-                    val selected = viewModel.selectedPlayers
-                    println("GameStartFragment: startNextOnClickListener")
-                    println(selected.value.toString())
-                    println(mSelectedPlayers.toString() + ", " + mSelectedPlayers.size)
-                    // pass an array of player-ids instead of the whole player object, to prevent inconsistent data
-                    val action =
-                        GameStartFragmentDirections.actionGameStartToGameMainView(mSelectedPlayers)
-                    findNavController().navigate(action)
+                    val addPlayerFragment = fragments[0] as GameStartAddPlayerFragment
+
+                    // add listener to navigate to next screen with id list, when callback returns
+                    addPlayerFragment.onSelectedPlayerIdsPopulated = fun(ids) {
+                        val action =
+                            GameStartFragmentDirections.actionGameStartToGameMainView(ids)
+                        findNavController().navigate(action)
+                    }
+
+                    // trigger callback to async get player ids
+                    addPlayerFragment.getSelectedPlayerIds()
                 }
             }
         }
