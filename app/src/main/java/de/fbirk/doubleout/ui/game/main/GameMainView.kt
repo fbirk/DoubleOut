@@ -54,8 +54,7 @@ class GameMainView : Fragment(), GameFinishedDialogFragment.GameFinishedDialogLi
         val dartBoardView = view.findViewById<DartboardView>(R.id.main_dartboard_view)
         val segmentView = view.findViewById<DartboardSegmentView>(R.id.main_dartboard_segmentView)
 
-
-        _activePlayers = viewModel.initializeWithPlayers(navArgs.playerNames)
+        _activePlayers = viewModel.initializeWithPlayers(navArgs.playerNames, navArgs.startingValue)
         activePlayerName.text = _activePlayers[0].name
         activePlayerPoints.text = _activePlayers[0].pointsLeft.toString()
 

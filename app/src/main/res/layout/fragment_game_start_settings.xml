@@ -7,6 +7,7 @@
     tools:context=".ui.game.start.GameStartSettings">
 
     <LinearLayout
+        android:id="@+id/layout_radioGroup_startingValue"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical">
@@ -17,15 +18,18 @@
             android:text="Spielmodus" />
 
         <RadioGroup
+            android:id="@+id/radio_startingValue"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
 
             <RadioButton
+                android:id="@+id/radioBtn_301"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="301-0" />
 
             <RadioButton
+                android:id="@+id/radionBtn_501"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="501-0" />
@@ -33,6 +37,7 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/layout_radioGroup_finishMode"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical">
@@ -41,29 +46,36 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Spiel beenden" />
-
         <RadioGroup
+            android:id="@+id/radio_finishMode"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
             <RadioButton
+                android:id="@+id/radioBtn_StraightOut"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Straight Out"/>
             <RadioButton
+                android:id="@+id/radioBtn_DoubleOut"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Double Out"/>
             <RadioButton
+                android:id="@+id/radioBtn_MasterOut"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Master Out"/>
             <RadioButton
+                android:id="@+id/radioBtn_DoubleIn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Double In"/>
         </RadioGroup>
     </LinearLayout>
+
     <LinearLayout
+        android:visibility="invisible"
+        android:id="@+id/layout_radioGroup_difficulty"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical">

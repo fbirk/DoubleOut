@@ -20,6 +20,7 @@ class GameMainViewViewModel(private val application: Context) : ViewModel() {
     var currentThrowsInTurn = ""
     private var throwCounter: Int = 0
     private val repository: PlayerRepository
+    private var mStartingValue = 301
 
     init {
         val dao = PlayerDatabase.getInstance(application).playerDao()
@@ -31,12 +32,13 @@ class GameMainViewViewModel(private val application: Context) : ViewModel() {
     /**
      * initialize the game
      */
-    fun initializeWithPlayers(playerNames: Array<String>): ArrayList<Player> {
+    fun initializeWithPlayers(playerNames: Array<String>, startingValue: Int): ArrayList<Player> {
+        mStartingValue = startingValue
         var playerList = ArrayList<Player>()
 
         for ((index, name) in playerNames.withIndex()) {
             val player = Player(index, 0, 0, 0, 0.0, name)
-            player.pointsLeft = 301
+            player.pointsLeft = mStartingValue
             player.currentAvg = 0.0
             player.currentPosition = 0
             player.currentThrows = 0

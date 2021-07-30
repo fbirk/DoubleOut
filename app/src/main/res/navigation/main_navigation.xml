@@ -40,6 +40,12 @@
         <argument
             android:name="PlayerNames"
             app:argType="string[]" />
+        <argument
+            android:name="StartingValue"
+            app:argType="integer"/>
+        <argument
+            android:name="FinishMode"
+            app:argType="de.fbirk.doubleout.model.FinishMode" />
     </fragment>
     <fragment
         android:id="@+id/gameStatsFragment"

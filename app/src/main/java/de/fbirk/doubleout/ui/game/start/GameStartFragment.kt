@@ -10,6 +10,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.viewpager2.widget.ViewPager2
 import de.fbirk.doubleout.R
 import de.fbirk.doubleout.adapter.GameStartViewPagerAdapter
+import de.fbirk.doubleout.model.FinishMode
 
 /**
  * Main Fragment for the Game Start screens.
@@ -58,9 +59,16 @@ class GameStartFragment : Fragment() {
                 // move to main game screen
                 if (current == mViewPager.adapter?.itemCount) {
                     val addPlayerFragment = fragments[0] as GameStartAddPlayerFragment
+                    val settingsFragment = fragments[1] as GameStartSettings
                     val playerNames = addPlayerFragment.getSelectedPlayerNames()
+                    val startingValue = settingsFragment.mStartingValue
+                    val finishMode = settingsFragment.mFinishMode
                     val action =
-                        GameStartFragmentDirections.actionGameStartToGameMainView(playerNames.toTypedArray())
+                        GameStartFragmentDirections.actionGameStartToGameMainView(
+                            playerNames.toTypedArray(),
+                            startingValue,
+                            finishMode
+                        )
                     findNavController().navigate(action)
                 }
             }
