@@ -109,8 +109,9 @@ class GameStartAddPlayerFragment : Fragment() {
         imm.hideSoftInputFromWindow(windowToken, 0)
     }
 
-    fun getSelectedPlayerIds() = runBlocking {
-        return@runBlocking viewModel.getSelectedPlayerIds(coroutineScope)
+    fun getSelectedPlayerNames(): List<String> {
+        var names =  _selectedPlayers.map { x -> x.name }.toList()
+        return names
     }
 
     /**
@@ -118,7 +119,6 @@ class GameStartAddPlayerFragment : Fragment() {
      */
     private fun addPlayerEvent(text: String) {
         val playerName: String = text
-        // TODO: Fetch already known players and check for duplicates with new player
         viewModel.addPlayer(Player(0, 0, 0, 0, 0.0, playerName))
     }
 }

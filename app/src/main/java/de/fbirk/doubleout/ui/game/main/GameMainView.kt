@@ -32,13 +32,9 @@ class GameMainView : Fragment(), GameFinishedDialogFragment.GameFinishedDialogLi
 
     private lateinit var viewModel: GameMainViewViewModel
 
-    private var _activePlayers: ArrayList<Player> =
-        arrayListOf(
-            Player(0, 0, 0, 0, 0.0, "Player 1"),
-            Player(1, 0, 0, 0, 0.0, "Player 2")
-        )
+    private lateinit var _activePlayers: ArrayList<Player>
     private var activePlayerAdapter: ActivePlayerAdapter? = null
-    private val selectedPlayers: GameMainViewArgs by navArgs()
+    private val navArgs: GameMainViewArgs by navArgs()
     private var currentPlayer: Int = 0
 
     override fun onCreateView(
@@ -50,7 +46,6 @@ class GameMainView : Fragment(), GameFinishedDialogFragment.GameFinishedDialogLi
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.getSelectedPlayersById(selectedPlayers.playerIDs)
 
         val currentThrowsOverview = view.findViewById<TextView>(R.id.txt_currentThrowsOverview)
         val activePlayerName = view.findViewById<TextView>(R.id.txt_currentPlayerName)
@@ -58,14 +53,15 @@ class GameMainView : Fragment(), GameFinishedDialogFragment.GameFinishedDialogLi
         val missedButton = view.findViewById<Button>(R.id.btn_missed)
         val dartBoardView = view.findViewById<DartboardView>(R.id.main_dartboard_view)
         val segmentView = view.findViewById<DartboardSegmentView>(R.id.main_dartboard_segmentView)
-        val recyclerView = view.findViewById<RecyclerView>(R.id.recycler_activePlayers)
-        activePlayerAdapter = ActivePlayerAdapter(this, _activePlayers!!)
-        recyclerView.adapter = activePlayerAdapter
 
-        viewModel.initializeWithPlayers(_activePlayers)
+
+        _activePlayers = viewModel.initializeWithPlayers(navArgs.playerNames)
         activePlayerName.text = _activePlayers[0].name
         activePlayerPoints.text = _activePlayers[0].pointsLeft.toString()
 
+        val recyclerView = view.findViewById<RecyclerView>(R.id.recycler_activePlayers)
+        activePlayerAdapter = ActivePlayerAdapter(this, _activePlayers!!)
+        recyclerView.adapter = activePlayerAdapter
 
         // observe players list
         viewModel.players.observe(viewLifecycleOwner, {

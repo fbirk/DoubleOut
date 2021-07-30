@@ -1,13 +1,11 @@
 package de.fbirk.doubleout.ui.game.start
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.viewpager2.widget.ViewPager2
 import de.fbirk.doubleout.R
@@ -60,16 +58,10 @@ class GameStartFragment : Fragment() {
                 // move to main game screen
                 if (current == mViewPager.adapter?.itemCount) {
                     val addPlayerFragment = fragments[0] as GameStartAddPlayerFragment
-
-                    // add listener to navigate to next screen with id list, when callback returns
-                    addPlayerFragment.onSelectedPlayerIdsPopulated = fun(ids) {
-                        val action =
-                            GameStartFragmentDirections.actionGameStartToGameMainView(ids)
-                        findNavController().navigate(action)
-                    }
-
-                    // trigger callback to async get player ids
-                    addPlayerFragment.getSelectedPlayerIds()
+                    val playerNames = addPlayerFragment.getSelectedPlayerNames()
+                    val action =
+                        GameStartFragmentDirections.actionGameStartToGameMainView(playerNames.toTypedArray())
+                    findNavController().navigate(action)
                 }
             }
         }

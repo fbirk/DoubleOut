@@ -31,40 +31,26 @@ class GameMainViewViewModel(private val application: Context) : ViewModel() {
     /**
      * initialize the game
      */
-    fun initializeWithPlayers(playerList: List<Player>) {
-        players.value = playerList.toCollection(ArrayList())
-        for (player in players.value!!) {
+    fun initializeWithPlayers(playerNames: Array<String>): ArrayList<Player> {
+        var playerList = ArrayList<Player>()
+
+        for ((index, name) in playerNames.withIndex()) {
+            val player = Player(index, 0, 0, 0, 0.0, name)
             player.pointsLeft = 301
             player.currentAvg = 0.0
             player.currentPosition = 0
             player.currentThrows = 0
+            playerList.add(player)
         }
 
-        // sets.value = listOf(MatchSet(0, 0))
-        // match.value = Match(0, Calendar.getInstance().time)
+        players.postValue(playerList)
+        return playerList.clone() as ArrayList<Player>
     }
 
     fun resetPlayers() {
         for (player in players.value!!) {
             player.pointsLeft = 301
             player.currentPosition = 0
-        }
-    }
-
-    /**
-     * TODO: get the selected players for this game by their id
-     */
-    fun getSelectedPlayersById(selectedPlayerIds: IntArray) {
-        if (selectedPlayerIds.isNotEmpty()) {
-            val players = repository.getAllPlayersWithId(selectedPlayerIds.asList())
-            initializeWithPlayers(players.value!!)
-        } else {
-            val players = repository.getAllPlayers()
-            println("GameMainView ViewModel: getSelectedPlayersById")
-            println(players.value)
-            if (players.value != null) {
-                initializeWithPlayers(players.value!!)
-            }
         }
     }
 

@@ -29,9 +29,9 @@ class GameStartViewModel(application: Context) : ViewModel() {
                 mPlayer.value?.let { addPlayerToSelectedPlayers(it) }
             }.start()
         } else {
-            addPlayerToSelectedPlayers(player)
             Thread { repository.savePlayer(player) }.start()
         }
+        addPlayerToSelectedPlayers(player)
     }
 
     private fun addPlayerToSelectedPlayers(player: Player) {
@@ -47,7 +47,7 @@ class GameStartViewModel(application: Context) : ViewModel() {
         }
     }
 
-    suspend fun getSelectedPlayerIds(coroutineScope: CoroutineScope):IntArray {
+    suspend fun getSelectedPlayerIds(coroutineScope: CoroutineScope): IntArray {
         var idList = ArrayList<Int>()
 
         coroutineScope.launch {
