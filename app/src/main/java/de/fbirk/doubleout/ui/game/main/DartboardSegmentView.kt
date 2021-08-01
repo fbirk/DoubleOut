@@ -39,6 +39,8 @@ class DartboardSegmentView @JvmOverloads constructor(
     private val whitePaint = Paint()
     private val backgroundColor: Int
 
+    private var touchPointPath = Path()
+
     init {
         isClickable = true
         context.withStyledAttributes(attrs, R.styleable.DartboardSegmentView) {
@@ -137,6 +139,10 @@ class DartboardSegmentView @JvmOverloads constructor(
             }
         } else {
             drawMiddleCircle(canvas, redFieldPaint, greenFieldPaint)
+        }
+
+        if (touchPointPath != null) {
+            canvas?.drawPath(touchPointPath, redFieldPaint)
         }
     }
 
@@ -262,7 +268,7 @@ class DartboardSegmentView @JvmOverloads constructor(
     ): Field? {
         // create a rectangle with edge length of 1 for the touch input
         val touchPoint = RectF(x, y, x + 1, y + 1)
-        val touchPointPath = Path()
+        touchPointPath = Path()
         touchPointPath.addRect(touchPoint, Path.Direction.CW)
 
         for (element in segments) {
@@ -278,7 +284,7 @@ class DartboardSegmentView @JvmOverloads constructor(
                 }
             }
         }
-        touchPointPath.reset()
+        // touchPointPath.reset()
         return null
     }
 

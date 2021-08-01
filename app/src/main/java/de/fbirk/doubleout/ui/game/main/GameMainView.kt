@@ -94,7 +94,7 @@ class GameMainView : Fragment(), GameFinishedDialogFragment.GameFinishedDialogLi
 
         // on segment-field clicked add points to current player in view model and update display texts
         segmentView.onDartboardSegmentClicked = fun(resultField) {
-            segmentView.isVisible = false   // hide segment view
+            // segmentView.isVisible = false   // hide segment view
 
             viewModel.addPoints(resultField)
             if (viewModel.currentIndex != currentPlayer) {

@@ -6,4 +6,4 @@ import kotlinx.android.parcel.Parcelize
 
 
 @Parcelize
-class TimeLineModel (var message: String, var date: String) : Parcelable
+class TimeLineModel (var title: String, var date: String, var description: String) : Parcelable

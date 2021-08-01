@@ -37,14 +37,26 @@ class GameStatsTimelineFragment : Fragment() {
     }
 
     private fun setDataListItems() {
-        mDataList.add(TimeLineModel("Item successfully delivered", ""))
-        mDataList.add(TimeLineModel("Courier is out to delivery your order", "2017-02-12 08:00"))
-        mDataList.add(TimeLineModel("Item has reached courier facility at New Delhi", "2017-02-11 21:00"))
-        mDataList.add(TimeLineModel("Item has been given to the courier", "2017-02-11 18:00"))
-        mDataList.add(TimeLineModel("Item is packed and will dispatch soon", "2017-02-11 09:30"))
-        mDataList.add(TimeLineModel("Order is being readied for dispatch", "2017-02-11 08:00"))
-        mDataList.add(TimeLineModel("Order processing initiated", "2017-02-10 15:00"))
-        mDataList.add(TimeLineModel("Order confirmed by seller", "2017-02-10 14:30"))
-        mDataList.add(TimeLineModel("Order placed successfully", "2017-02-10 14:00"))
+        mDataList.add(
+            TimeLineModel(
+                "Wright vs. Van Gerwen",
+                "2020-01-01 12:00",
+                "Won: 7:3, Avg.: 39.5"
+            )
+        )
+        mDataList.add(
+            TimeLineModel(
+                "Wright vs. Alcinas",
+                "2018-12-13 12:00",
+                "Lost: 1:3, Avg.: 35.0"
+            )
+        )
+        mDataList.add(
+            TimeLineModel(
+                "Wright vs. Lewis",
+                "2017-12-14 12:00",
+                "Lost: 1:4, Avg.: 34.8"
+            )
+        )
     }
 }
