@@ -13,6 +13,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
+import de.fbirk.doubleout.GameStatsHeatmapFragment
 import de.fbirk.doubleout.R
 import de.fbirk.doubleout.adapter.GameStartViewPagerAdapter
 import de.fbirk.doubleout.model.Player.Player
@@ -48,6 +49,7 @@ class GameStatsFragment : Fragment() {
                 arrayOf(
                     GameStatsTimelineFragment(),
                     GameStatsLineChartFragment(),
+                    GameStatsHeatmapFragment(),
                     GameStatsPieChartFragment()
                 )
             )

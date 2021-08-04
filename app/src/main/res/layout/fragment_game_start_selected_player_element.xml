@@ -37,7 +37,7 @@
             android:gravity="left"
             android:maxLines="1"
             android:singleLine="true"
-            android:text="Dr. Freiherr von und zu Mustermann"
+            android:text="von und zu Mustermann, Max"
             android:textSize="24dp"
             app:layout_constrainedWidth="true"
             app:layout_constraintEnd_toStartOf="@+id/btn_deletePlayer"

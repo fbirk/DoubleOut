@@ -40,6 +40,9 @@ android {
 }
 
 dependencies {
+    // Heatmap
+    implementation 'ca.heartlandsoftware:androidheatmap:1.2.0'
+
     // Timeline view
     implementation 'com.github.vipulasri:timelineview:1.1.5'
 
